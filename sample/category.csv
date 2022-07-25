@@ -1,0 +1,11 @@
+id,parent_id,name,is_active,url_key,description
+2,1,B2C,true,,
+3,1,B2B,true,,
+4,2,Donna,true,,
+5,2,Uomo,true,,
+6,2,Bambino,true,,
+7,2,Casa,true,,
+8,4,Brand,true,,
+9,4,Abbigliamento,true,,
+10,4,Borse,true,,
+11,4,Scarpe,true,,

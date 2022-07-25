@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © GhostUnicorns spa. All rights reserved.
+  ~ See LICENSE and/or COPYING.txt for license details.
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Logger start -->
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Logger\Virtual"
+                 type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">GhostUnicorns::ImportCategoryByIdFromCsv</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="debug" xsi:type="object">
+                    GhostUnicorns\CrtBase\Logger\Handler\Console
+                </item>
+                <item name="system" xsi:type="object">
+                    GhostUnicorns\CrtImportCategoryByIdFromCsv\Logger\Handler\File\Virtual
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Logger\Handler\File\Virtual"
+                 type="GhostUnicorns\CrtBase\Logger\Handler\File">
+        <arguments>
+            <argument name="config" xsi:type="object">
+                GhostUnicorns\CrtImportCategoryByIdFromCsv\Model\Config
+            </argument>
+            <argument name="fileName" xsi:type="string">
+                /var/log/crt-category-by-id-from-csv.log
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- Logger end -->
+
+    <!-- Collector start -->
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Collector\Anagrafica\Virtual"
+                 type="GhostUnicorns\CrtUtils\Collector\CsvCollector">
+        <arguments>
+            <argument name="filePath" xsi:type="string">
+                /var/import
+            </argument>
+            <argument name="fileName" xsi:type="string">
+                category.csv
+            </argument>
+            <argument name="identifiers" xsi:type="array">
+                <item name="1" xsi:type="string">id</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- Collector end -->
+
+    <!-- Refiner start -->
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Refiner\Id\Mandatory\Virtual"
+                 type="GhostUnicorns\CrtUtils\Refiner\Json\MandatoryRefiner">
+        <arguments>
+            <argument name="field" xsi:type="string">category_data.id</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Refiner\Id\Intval\Virtual"
+                 type="GhostUnicorns\CrtUtils\Refiner\Json\IntvalRefiner">
+        <arguments>
+            <argument name="field" xsi:type="string">category_data.id</argument>
+            <argument name="greaterThan" xsi:type="number">1</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Refiner\ParentId\Mandatory\Virtual"
+                 type="GhostUnicorns\CrtUtils\Refiner\Json\MandatoryRefiner">
+        <arguments>
+            <argument name="field" xsi:type="string">category_data.parent_id</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Refiner\ParentId\Intval\Virtual"
+                 type="GhostUnicorns\CrtUtils\Refiner\Json\IntvalRefiner">
+        <arguments>
+            <argument name="field" xsi:type="string">category_data.parent_id</argument>
+            <argument name="greaterThan" xsi:type="number">0</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Refiner\StoreId\Intval\Virtual"
+                 type="GhostUnicorns\CrtUtils\Refiner\Json\IntvalRefiner">
+        <arguments>
+            <argument name="field" xsi:type="string">category_data.store_id</argument>
+            <argument name="greaterThan" xsi:type="number">0</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Refiner\StoreId\MandatoryAutoFill\Virtual"
+                 type="GhostUnicorns\CrtUtils\Refiner\Json\MandatoryAutoFillRefiner">
+        <arguments>
+            <argument name="destination" xsi:type="string">category_data.store_id</argument>
+            <argument name="value" xsi:type="string">0</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Refiner\Name\Mandatory\Virtual"
+                 type="GhostUnicorns\CrtUtils\Refiner\Json\MandatoryRefiner">
+        <arguments>
+            <argument name="field" xsi:type="string">category_data.name</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Refiner\Name\Trim\Virtual"
+                 type="GhostUnicorns\CrtUtils\Refiner\Json\TrimRefiner">
+        <arguments>
+            <argument name="field" xsi:type="string">category_data.name</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Refiner\IsActive\MandatoryAutoFill\Virtual"
+                 type="GhostUnicorns\CrtUtils\Refiner\Json\MandatoryAutoFillRefiner">
+        <arguments>
+            <argument name="destination" xsi:type="string">category_data.is_active</argument>
+            <argument name="value" xsi:type="string">false</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Refiner\IsActive\Boolean\Virtual"
+                 type="GhostUnicorns\CrtUtils\Refiner\Json\BooleanRefiner">
+        <arguments>
+            <argument name="field" xsi:type="string">category_data.is_active</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Refiner\UrlKey\Virtual"
+                 type="GhostUnicorns\CrtUtils\Refiner\Json\UrlKeyRefiner">
+        <arguments>
+            <argument name="field" xsi:type="string">category_data.url_key</argument>
+        </arguments>
+    </virtualType>
+    <!-- Refiner end -->
+
+    <!-- Transferor start -->
+    <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Transferor\DefaultStockTransferor\Virtual"
+                 type="GhostUnicorns\CrtImportCategoryByIdFromCsv\Transferor\CategoryTransferor">
+        <arguments>
+            <argument name="source" xsi:type="string">category_data</argument>
+            <argument name="specialAttributes" xsi:type="array">
+                <item name="id" xsi:type="string">id</item>
+                <item name="parent_id" xsi:type="string">parent_id</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- Transferor end -->
+</config>
