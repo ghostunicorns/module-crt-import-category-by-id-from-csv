@@ -33,17 +33,17 @@ class Config implements CrtConfigInterface
     private $scopeConfig;
 
     /**
-     * @var \GhostUnicorns\CrtImport\Model\Config
+     * @var \GhostUnicorns\CrtImporter\Model\Config
      */
     private $baseConfig;
 
     /**
      * @param ScopeConfigInterface $scopeConfig
-     * @param \GhostUnicorns\CrtImport\Model\Config $baseConfig
+     * @param \GhostUnicorns\CrtImporter\Model\Config $baseConfig
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        \GhostUnicorns\CrtImport\Model\Config $baseConfig
+        \GhostUnicorns\CrtImporter\Model\Config $baseConfig
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->baseConfig = $baseConfig;

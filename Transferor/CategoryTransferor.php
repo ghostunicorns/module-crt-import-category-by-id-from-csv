@@ -78,7 +78,7 @@ class CategoryTransferor implements TransferorInterface
     /**
      * @var array
      */
-    private $specialAttributes;
+    private $attributesToIgnore;
 
     /**
      * @param Logger $logger
@@ -91,7 +91,7 @@ class CategoryTransferor implements TransferorInterface
      * @param UpdateCategory $updateCategory
      * @param ResourceConnection $resourceConnection
      * @param string $source
-     * @param array $specialAttributes
+     * @param array $attributesToIgnore
      */
     public function __construct(
         Logger $logger,
@@ -104,7 +104,7 @@ class CategoryTransferor implements TransferorInterface
         UpdateCategory $updateCategory,
         ResourceConnection $resourceConnection,
         string $source,
-        array $specialAttributes = []
+        array $attributesToIgnore = []
     ) {
         $this->logger = $logger;
         $this->config = $config;
@@ -116,7 +116,7 @@ class CategoryTransferor implements TransferorInterface
         $this->updateCategory = $updateCategory;
         $this->resourceConnection = $resourceConnection;
         $this->source = $source;
-        $this->specialAttributes = $specialAttributes;
+        $this->attributesToIgnore = $attributesToIgnore;
     }
 
     /**
@@ -149,7 +149,7 @@ class CategoryTransferor implements TransferorInterface
                 $this->resourceConnection->getConnection()->beginTransaction();
 
                 $category = $this->getOrCreateCategory($categoryData['id']);
-                $this->updateCategory->execute($category, $categoryData, $this->specialAttributes);
+                $this->updateCategory->execute($category, $categoryData, $this->attributesToIgnore);
                 $this->logger->info(__(
                     'activityId:%1 ~ Transferor ~ transferorType:%2 ~ entityIdentifier:%3 ~'.
                     ' saved category with values:%4 ~ END',

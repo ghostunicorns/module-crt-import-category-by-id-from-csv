@@ -129,7 +129,7 @@
                  type="GhostUnicorns\CrtImportCategoryByIdFromCsv\Transferor\CategoryTransferor">
         <arguments>
             <argument name="source" xsi:type="string">category_data</argument>
-            <argument name="specialAttributes" xsi:type="array">
+            <argument name="attributesToIgnore" xsi:type="array">
                 <item name="id" xsi:type="string">id</item>
                 <item name="parent_id" xsi:type="string">parent_id</item>
             </argument>
