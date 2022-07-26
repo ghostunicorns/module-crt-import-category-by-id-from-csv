@@ -126,7 +126,7 @@
 
     <!-- Transferor start -->
     <virtualType name="GhostUnicorns\CrtImportCategoryByIdFromCsv\Transferor\DefaultStockTransferor\Virtual"
-                 type="GhostUnicorns\CrtImportCategoryByIdFromCsv\Transferor\CategoryTransferor">
+                 type="GhostUnicorns\CrtImportCategory\Transferor\CategoryTransferor">
         <arguments>
             <argument name="source" xsi:type="string">category_data</argument>
             <argument name="attributesToIgnore" xsi:type="array">
